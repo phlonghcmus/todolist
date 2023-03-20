@@ -3,6 +3,13 @@ import type { RadioChangeEvent } from 'antd';
 import { Typography, Input, Select, Tag } from 'antd';
 import { Radio } from 'antd';
 import type { CustomTagProps } from 'rc-select/lib/BaseSelect';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/hook';
+import {
+  priorityFilterChange,
+  searchFilterChange,
+  selectFilters,
+  statusFilterChange,
+} from '../../redux/slices/filtersSlice/filters';
 
 const { Search } = Input;
 const onSearch = (value: string) => console.log(value);
@@ -12,9 +19,9 @@ const optionsPrioprity = [
   { value: 'Low' },
 ];
 const optionsStatus = [
-  { label: 'All', value: 'all' },
-  { label: 'Completed', value: 'completed' },
-  { label: 'To do', value: 'todo' },
+  { label: 'All', value: 'All' },
+  { label: 'Completed', value: 'Completed' },
+  { label: 'To do', value: 'To do' },
 ];
 const tagRender = (props: CustomTagProps) => {
   const { label, closable, onClose, value } = props;
@@ -37,9 +44,17 @@ const tagRender = (props: CustomTagProps) => {
 
 const { Title } = Typography;
 const Filters: React.FC = () => {
-  const [status, setStatus] = useState<string>('All');
+  const filters = useAppSelector(selectFilters);
+  const dispatch = useAppDispatch();
+  const { search, status, priority } = filters;
+  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(searchFilterChange(e.target.value));
+  };
   const onChangeStatus = ({ target: { value } }: RadioChangeEvent) => {
-    setStatus(value);
+    dispatch(statusFilterChange(value));
+  };
+  const onChangePriority = (value: string[]) => {
+    dispatch(priorityFilterChange(value));
   };
   return (
     <>
@@ -49,6 +64,8 @@ const Filters: React.FC = () => {
         allowClear
         onSearch={onSearch}
         style={{ width: '100%' }}
+        value={search}
+        onChange={onSearchChange}
       />
       <Title level={5}>Filter By Status </Title>
       <Radio.Group
@@ -61,9 +78,10 @@ const Filters: React.FC = () => {
         mode="multiple"
         showArrow
         tagRender={tagRender}
-        defaultValue={['High', 'Medium']}
+        defaultValue={priority}
         style={{ width: '100%' }}
         options={optionsPrioprity}
+        onChange={onChangePriority}
       />
     </>
   );
