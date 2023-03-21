@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hook';
-import { selectToDoRemaning } from '../../redux/slices/reSelect';
+import { selectToDoRemaning } from '../../redux/reSelect';
 import { selectTodos, todoAdded } from '../../redux/slices/todosSlice/todos';
 import { ITodo } from '../../share/types';
 import Todo from '../Todo/Todo';

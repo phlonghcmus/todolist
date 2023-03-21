@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { selectTodos } from '../todosSlice/todos';
-import { selectFilters } from '../filtersSlice/filters';
+import { selectTodos } from '../slices/todosSlice/todos';
+import { selectFilters } from '../slices/filtersSlice/filters';
 export const selectToDoRemaning = createSelector(
   selectTodos,
   selectFilters,

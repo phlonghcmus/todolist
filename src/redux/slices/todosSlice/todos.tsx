@@ -2,11 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { ITodo } from '../../../share/types';
 
-const initialState: ITodo[] = [
-  { id: '1', name: 'Learn Redux', completed: true, priority: 'High' },
-  { id: '2', name: 'Learn Yoga', completed: false, priority: 'Low' },
-  { id: '3', name: 'Do exercise', completed: true, priority: 'Medium' },
-];
+const initialState: ITodo[] = [];
 
 const todosSlice = createSlice({
   name: 'todos',
